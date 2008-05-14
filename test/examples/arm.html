@@ -4,29 +4,20 @@
     <title>Arm</title>
     <link rel="Stylesheet" media="screen" href="../testsuite.css"/>
 		<link rel="stylesheet" href="../../examples/style.css"/></head>
-    <script type="text/javascript" src="../jquery.js"></script>
-    <script type="text/javascript" src="../jqUnit.js"></script>
+    <script src="../jquery.js"></script>
+    <script src="../jqUnit.js"></script>
 	  <script src="../../processing.js"></script>
+	  <script src="../examples.js"></script>
 		<script src="../../examples/init.js"></script>
     <script>
 		
-		var temp = function ($){
-		  jqUnit.test('Arm', function(){
-				dataURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAEX0lEQVR4nO3bMW7bSACG0dwxcsFUdqNGvVS5thW2PAQNuNEZCF0joHSR2SKQEXgX/zo2YXKsV7x+BjMfNCOS387ncwH+27e5BwBLJhAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAUGUg4ziWYRhK3/el67rStm1p27Z0XVf6vi/DMJRxHGcfJ/WrLpDj8Vi6riv7/T7quq4cj8fZx0vdqgnkdDqVw+Hwv2G8djgcyul0mn381KmaQN4Tx5+RzD1+6lRFIMfj8d1xXDhu8R6LD2QcxzfdOd5yJ3Fx528tPpBhGD4cx8UwDLPPh7osPpC+7ycLpO/72edDXRYfyBTHqz+PWXPPh7osPpC2bScLpG3b2edDXRYfyFRxXMw9H+oiEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCASCKgN5eHgo2+22rNfr0jRNWa1W5fv3728ydXBTa9u2dF1X+r4vwzCUcRxnX4NrVl0gu92u/Pjx481B1BbIa13XlePxOPs6XKtqAnl8fCybzebdYdQayMXhcCin02n29bg21QQyRRw1B3KJZO71uDZVBLLb7SaJo/ZA9vu949YnW3wgDw8PH7pzfLVAuq5zcf9Eiw9ku91OFsdXCGS/35dhGGZfl2ux+EDW67VAXun7fvZ1uRaLD6RpGoG80nXd7OtyLRYfyN88BLyWQNq2nX1drsXiA7m5uZksjtVqNfvmFkhdFh/I7e3tZIE0TTP75p6CI5ZAXtzf308WyHq9nn1zT8ElXSAvnp6eJgtku93Ovrmn4G9egbz49etXubu7m+R49fj4OPvm/igPCgXyL8/Pzx8OZLfbzb65p+BVk89VRSDn87n8/Pnz3XFsNpvZN/YUvKz4+aoJZBzHd0Wy2Wy+xNHK6+7zqCaQi+fn5zfdSZqm+RLHKh9Mzau6QM7n3xf3p6encn9/X25vb8vNzU1ZrValaZqyXq/Ldrut9lfDJ7fLUmUg8FkEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUDwDzjWaz2/zqChAAAAAElFTkSuQmCC";
-				canvas = document.getElementById('arm').toDataURL();
-				
-				img = document.createElement('img');
-				img.setAttribute('src', dataURL);
-				img.setAttribute('class', 'expected')
-				main = document.getElementById('expected');
-				main.appendChild(img);
-				
-				jqUnit.ok(canvas == dataURL);
-		  });
-
-		};
+		var temptest = Processing.test_example('arm', "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAEX0lEQVR4nO3bMW7bSACG0dwxcsFUdqNGvVS5thW2PAQNuNEZCF0joHSR2SKQEXgX/zo2YXKsV7x+BjMfNCOS387ncwH+27e5BwBLJhAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAUGUg4ziWYRhK3/el67rStm1p27Z0XVf6vi/DMJRxHGcfJ/WrLpDj8Vi6riv7/T7quq4cj8fZx0vdqgnkdDqVw+Hwv2G8djgcyul0mn381KmaQN4Tx5+RzD1+6lRFIMfj8d1xXDhu8R6LD2QcxzfdOd5yJ3Fx528tPpBhGD4cx8UwDLPPh7osPpC+7ycLpO/72edDXRYfyBTHqz+PWXPPh7osPpC2bScLpG3b2edDXRYfyFRxXMw9H+oiEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCASCKgN5eHgo2+22rNfr0jRNWa1W5fv3728ydXBTa9u2dF1X+r4vwzCUcRxnX4NrVl0gu92u/Pjx481B1BbIa13XlePxOPs6XKtqAnl8fCybzebdYdQayMXhcCin02n29bg21QQyRRw1B3KJZO71uDZVBLLb7SaJo/ZA9vu949YnW3wgDw8PH7pzfLVAuq5zcf9Eiw9ku91OFsdXCGS/35dhGGZfl2ux+EDW67VAXun7fvZ1uRaLD6RpGoG80nXd7OtyLRYfyN88BLyWQNq2nX1drsXiA7m5uZksjtVqNfvmFkhdFh/I7e3tZIE0TTP75p6CI5ZAXtzf308WyHq9nn1zT8ElXSAvnp6eJgtku93Ovrmn4G9egbz49etXubu7m+R49fj4OPvm/igPCgXyL8/Pzx8OZLfbzb65p+BVk89VRSDn87n8/Pnz3XFsNpvZN/YUvKz4+aoJZBzHd0Wy2Wy+xNHK6+7zqCaQi+fn5zfdSZqm+RLHKh9Mzau6QM7n3xf3p6encn9/X25vb8vNzU1ZrValaZqyXq/Ldrut9lfDJ7fLUmUg8FkEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUDwDzjWaz2/zqChAAAAAElFTkSuQmCC"); 
 		
-		setTimeout('temp(jQuery)', 100);
+		// Do this nasty hack because calling Processing.test
+		// before the canvas is done loading will cause the
+		// test to fail.  Any ideas on how to do this better?
+		// TODO: do this better		
+		setTimeout('temptest(jQuery)', 100);
   
 
  	</script>
