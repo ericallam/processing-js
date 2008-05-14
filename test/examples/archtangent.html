@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArchTangent</title>
+    <link rel="Stylesheet" media="screen" href="../testsuite.css"/>
+		<link rel="stylesheet" href="../../examples/style.css"/></head>
+    <script type="text/javascript" src="../jquery.js"></script>
+    <script type="text/javascript" src="../jqUnit.js"></script>
+	  <script src="../../processing.js"></script>
+		<script src="../../examples/init.js"></script>
+    <script>
+		
+		var temp = function ($){
+		  jqUnit.test('ArchTangent', function(){
+				dataURL = "data:image/png;base64,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";
+				canvas = document.getElementById('archtangent').toDataURL();
+				
+				img = document.createElement('img');
+				img.setAttribute('src', dataURL);
+				img.setAttribute('class', 'expected')
+				main = document.getElementById('expected');
+				main.appendChild(img);
+				
+				jqUnit.ok(canvas == dataURL);
+		  });
+
+		};
+		
+		setTimeout('temp(jQuery)', 100);
+  
+
+ 	</script>
+  </head>
+  <body id="body">
+    <h1 id="header">ArchTangent</h1>
+		
+    <h2 id="banner"></h2>
+		
+    <h2 id="userAgent"></h2>
+		
+    <!-- Test HTML -->
+		<script type="application/processing" target="archtangent">
+		Eye e1, e2, e3, e4, e5;
+
+		void setup() 
+		{
+		  size(200, 200);
+		  smooth();
+		  noStroke();
+		  e1 = new Eye( 50,  16,  80);
+		  e2 = new Eye( 64,  85,  40);  
+		  e3 = new Eye( 90, 200, 120);
+		  e4 = new Eye(150,  44,  40); 
+		  e5 = new Eye(175, 120,  80);
+		}
+
+		void draw() 
+		{
+		  background(102);
+
+		  e1.update(mouseX, mouseY);
+		  e2.update(mouseX, mouseY);
+		  e3.update(mouseX, mouseY);
+		  e4.update(mouseX, mouseY);
+		  e5.update(mouseX, mouseY);
+
+		  e1.display();
+		  e2.display();
+		  e3.display();
+		  e4.display();
+		  e5.display();
+		}
+
+		class Eye 
+		{
+		  int ex, ey;
+		  int size;
+		  float angle = 0.0;
+
+		  Eye(int x, int y, int s) {
+		    ex = x;
+		    ey = y;
+		    size = s;
+		 }
+
+		  void update(int mx, int my) {
+		    angle = atan2(my-ey, mx-ex);
+		  }
+
+		  void display() {
+		    pushMatrix();
+		    translate(ex, ey);
+		    fill(255);
+		    ellipse(0, 0, size, size);
+		    rotate(angle);
+		    fill(153);
+		    ellipse(size/4, 0, size/2, size/2);
+		    popMatrix();
+		  }
+		}
+		</script><canvas width="200" height="200" id="archtangent"></canvas></p>
+		<div style="display:none;"></div>
+		<div id="expected"></div>
+		<div id="main">
+		
+		</div>
+    <ol id="tests">
+    </ol>
+  </body>
+</html>
