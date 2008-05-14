@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Array</title>
+    <link rel="Stylesheet" media="screen" href="../testsuite.css"/>
+		<link rel="stylesheet" href="../../examples/style.css"/></head>
+    <script src="../jquery.js"></script>
+    <script src="../jqUnit.js"></script>
+	  <script src="../../processing.js"></script>
+	  <script src="../examples.js"></script>
+		<script src="../../examples/init.js"></script>
+    <script>
+		
+		var temptest = Processing.test_example('array', "data:image/png;base64,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w8MtCQsLQ1hYGEJDQzFy5EhLhg8fjpCQEISEhCA4OBjBwcEICgpCYGAgAgMDERAQgICAAPj5+cHX1xc+Pj6WmEwmeHt7Y9iwYRg2bBg8PT3h4eEBd3d3uLu7w83NDW5ubjAajXB1dYWrqytcXFxgMBjg7OwMZ2dnODk5wdHREUOGDMGQIUPg4OCAQYMGwd7eHvb29rCzs4OdnR1sbW1hY2NjuRxWVlawsrKCtbU1bGxsYGNjA1tbW9ja2sLOzg729vYYNGgQBg0aBAcHBwwZMgSOjo5wdHSEk5MTnJ2dYTAYYDAY4OLiAldXVxiNRhiNRsvvdnd3h4eHBzw8PODp6Ylhw4bB29sb3t7eMJlMlu/g6+sLX19f+Pn5ISAgwPLtAgMDERQUhODgYMs3DgkJwfDhwy3fPzQ0FKGhoZb3Mb9XREQEIiIiLO9pfl/zm0dHR7/RBXM/zJ2Ji4v7tz4N7NrbXUxISPife/z/OFhDIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIP80IIMHD9aBcXR0fCNOTk6WODs7W2IwGNTFxcUSV1dXNRqNajQadejQoeru7q7u7u7q6empXl5e6u3trSaTSU0mk/r4+Ki/v7/6+/trQECABgYGanBwsAYHB+uIESM0NDRUw8LCNDw8XEeNGqVRUVEaHR2tsbGxGh8fr2PGjNGEhARNTEzUpKQkTU5O1gkTJuikSZM0JSVFp0yZotOmTdPp06frrFmzdPbs2ZqRkaEff/yxZmVlaXZ2ts6bN09zcnJ00aJFmpeXpwUFBVpYWKjLli3T5cuX68qVK7W4uFhLSkp09erVWlFRoZWVlVpVVaXV1dVaU1Ojmzdv1q1bt+o333yjTU1Nun37dt25c6e2tbXpd999p99//712d3frDz/8oPv27dOenh7t7e3VgwcP6uHDhxWAHjt2TE+ePKm//vqr9vX1aV9fn54+fVpPnjypx44dUwB6+PBhPXjwoPb29mpPT4/u27dP9+7dq7t379bOzk5tb2/XtrY23bFjhzY3N2tTU5Nu27ZNt27dqps3b9aamhr9+uuvdf369VpZWanl5eVaVlamJSUlWlxcrCtXrtTly5frkiVLtLCwUAsKCjQvL08XLVqkOTk5umDBAs3OztasrCzNzMzUjIwMnT17ts6cOVPT0tJ02rRpOmXKFE1JSdFJkybphAkTdPz48ZqUlKSJiYmakJCgY8aM0djYWB09erRGR0drVFSUjho1SsPDwzUsLExHjBihI0aM0ODgYH3vvfc0MDBQAwIC1N/fX319fdXHx0d9fHzUZDKpt7e3enl5qaenp7q7u+vQoUN16NChajQa1dXV1RIXFxc1GAxqMBje6K65z2933RyzhXfeeWeplXm13o551cxLNnDN/tuiDVwz85INXC/zapmXys/PD4GBgZZVMq9QeHg4IiMjER0djdjYWMtiJCYmIikpCcnJyZg4cSJSUlKQmpqKtLQ0zJgxA+np6cjIyMDcuXPxySefYP78+Vi4cCFyc3ORn5+PxYsXY+nSpSgqKsKqVatQWlqK1atXo7KyEuvXr0d1dTVqa2tRV1eHhoYGNDU1oaWlBTt37kR7ezu6urqwZ88eqCp6enrw008/4dChQwCAY8eO4dSpUzhz5gzOnj2L8+fP4+LFi7h8+TKuXr2KGzdu4NatW7h79y4ePHiAx48fo7+/Hy9evMDr16/x6tUrPH/+HE+fPsWjR49w//593LlzBzdv3sT169dx5coVXLp0CRcuXMC5c+fQ19eH06dP48SJEzh69CiOHDmCn3/+Gb29vdi/fz9EBN3d3ejs7MSuXbvQ2tqKlpYWNDY2or6+Hps3b0ZNTQ2qqqqwdu1aVFRUoKysDKWlpSguLsby5cuxZMkSFBQUIC8vD7m5ucjJycG8efOQlZWFzMxMZGRkYNasWZg+fTqmTZuGqVOnYvLkyZg4cSI++OADJCUlITExEWPHjkVcXBxiYmIQFRWFiIgIyz8A89U3X3o/P783LvrAS26+3gMv98Cr/Z8utvlqD7zcA6/3W1lDIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIARCIP8wIP8CtGFHAJ3ITtIAAAAASUVORK5CYII="); 
+		
+		// Do this nasty hack because calling Processing.test
+		// before the canvas is done loading will cause the
+		// test to fail.  Any ideas on how to do this better?
+		// TODO: do this better		
+		setTimeout('temptest(jQuery)', 100);
+  
+
+ 	</script>
+  </head>
+  <body id="body">
+    <h1 id="header">Array</h1>
+		
+    <h2 id="banner"></h2>
+		
+    <h2 id="userAgent"></h2>
+
+
+  <script type="application/processing">
+    size(200, 200);
+
+    float[] coswave = new float[width];
+
+    for(int i=0; i<width; i++) {
+      float ratio = (float)i/(float)width;
+      coswave[i] = abs( cos(ratio*PI) );
+    }
+
+    for(int i=0; i<width; i++) {
+      stroke(coswave[i]*255);
+      line(i, 0, i, width/3);
+    }
+
+    for(int i=0; i<width; i++) {
+      stroke(coswave[i]*255/4);
+      line(i, width/3, i, width/3*2);
+    }
+
+    for(int i=0; i<width; i++) {
+      stroke(255-coswave[i]*255);
+      line(i, width/3*2, i, height);
+    }
+  </script><canvas width="200" height="200" id="array"></canvas></p>
+  
+  <div style="display:none;"></div>
+  <div id="expected"></div>
+  <div id="main">
+
+  </div>
+  <ol id="tests">
+  </ol>
+</body>
+</html>

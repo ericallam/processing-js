@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Name of example</title>
+    <link rel="Stylesheet" media="screen" href="../testsuite.css"/>
+		<link rel="stylesheet" href="../../examples/style.css"/></head>
+    <script src="../jquery.js"></script>
+    <script src="../jqUnit.js"></script>
+	  <script src="../../processing.js"></script>
+	  <script src="../examples.js"></script>
+		<script src="../../examples/init.js"></script>
+    <script>
+		
+		var temptest = Processing.test_example('id_of_canvas', "expected_dataurl"); 
+		
+		// Do this nasty hack because calling Processing.test
+		// before the canvas is done loading will cause the
+		// test to fail.  Any ideas on how to do this better?
+		// TODO: do this better		
+		setTimeout('temptest(jQuery)', 100);
+  
+
+ 	</script>
+  </head>
+  <body id="body">
+    <h1 id="header">Name of example</h1>
+		
+    <h2 id="banner"></h2>
+		
+    <h2 id="userAgent"></h2>
+
+
+  <script type="application/processing">
+  // processing script here
+  </script><canvas width="200" height="200" id="id_of_canvas"></canvas></p>
+  
+  <div style="display:none;"></div>
+  <div id="expected"></div>
+  <div id="main">
+
+  </div>
+  <ol id="tests">
+  </ol>
+</body>
+</html>
