@@ -14,10 +14,9 @@
     <h2 id="banner"></h2>
 		
     <h2 id="userAgent"></h2>
+  
   	<div id="main">
-			<ol id="parsingtests">
-				
-			</ol>
+			
 	  </div>
 	  <ol id="tests">
 	  </ol>
@@ -33,86 +32,101 @@ $(document).ready(function(){
 <script>				
 	var temp = function($){
 		
-		function successful_output(expected, processing){
-			$('#parsingtests').prepend("<li><pre name='code' class='js'>" + processing + "</pre><pre name='code' class='js'>" + expected + "</pre></li>");
+		function succesful_output(expected, processing){
+		  return "<pre name='code' class='js'>// processing code\n\n" + processing + "\n\n//successfully parsed as:\n\n" + expected + "</pre>";
 		}
 		
 		function failure_ouput(expected, actual, processing){
-			
+			return "<pre name='code' class='js'>// processing code\n\n" + processing + "\n\n//failed to parse as:\n\n" + expected + "\n\n//instead parsed as:\n\n" + actual + "</pre>";
 		}
 		
-		function parse_ok(expected, processing){
+		function parse_ok(expected, processing, message){
 			parsed = Processing.parse(processing);
 			if(expected == parsed){
-				jqUnit.ok(true);
-				successful_output(expected, processing);
+				jqUnit.ok(true, succesful_output(expected, processing));
 			}else{
-				// console.log(expected.length);
-				// console.log(parsed.length);
-				console.log(processing + "\n\nexpected to parse to:\n\n" + expected + " \n\nbut actually parsed as:\n\n" + parsed);
-				jqUnit.ok(false);
+				jqUnit.ok(false, failure_ouput(expected, parsed, processing));
 			}
 		}
 		with (jqUnit) {
+		  
+		  module("Literals");
+		  test('floats', function(){
+		    expect(1);
+		    parse_ok("var theta = 0.0;", "float theta = 0.0f;");
+		  });
+		  
 			module("Vars");
 			test('variable declaration', function(){
+			  expect(3);
 				parse_ok("var fontA = loadFont(\"Arial\")", "PFont fontA = loadFont(\"Arial\")");
 				parse_ok("var yvalues;", "float[] yvalues;");
-				parse_ok("var theta = 0.0;", "float theta = 0.0f;");
 				parse_ok("var x, y;", "float x, y;");
 			});
 			
 			test('arrays', function(){
-				parse_ok("var amplitude = new ArrayList(maxwaves);", "float[] amplitude = new float[maxwaves];")
+			  expect(1);
+				parse_ok("var amplitude = new ArrayList(maxwaves);", "float[] amplitude = new float[maxwaves];");
 			});
 			
 			module("Functions");
 			test('function calls', function(){					
+			  expect(3);
 				parse_ok("size(200, 200);", "size(200, 200);");
 				parse_ok("background(102);", "background(102);");
 				parse_ok("textFont(fontA, 32);", "textFont(fontA, 32);")
 			});
 			
 			test('function_declarations', function(){
+			  expect(1);
 				parse_ok("Processing.setup = function setup() {}", "void setup() {}")
 			});
 			
 			module("Classes and Objects");
 			test('class_declaration', function(){
+			  expect(1);
 				parse_ok("class EggRing {}", "class EggRing {}");
 			});
 			
 			test('constructors', function(){
+			  expect(1);
 				parse_ok("function Egg() {with(this){\n  if ( arguments.length == 0 ) {\n} \n}}", "class Egg { Egg() {} }");
 			});
 			
 			test('constructor arguments', function(){
+			  expect(1);
 				parse_ok("function Egg() {with(this){\n  if ( arguments.length == 1 ) {\n    var s = arguments[0];\n} \n}}", "class Egg { Egg(int s) {} }")
 			});
 			
 			test('instance method', function(){
+			  expect(1);
 				parse_ok("function Egg() {with(this){\n  addMethod(this, 'wobble', function() {}); \n}}", "class Egg { void wobble() {} }")
 			});
 			
 			module("Control Structures");
 			test('for_loops', function(){
+			  expect(1);
 				parse_ok("for (var j = 0; j < maxwaves; j++) {}", "for (int j = 0; j < maxwaves; j++) {}");
 			});
 			
 			test('multi line if', function(){
+			  expect(1);
 				parse_ok("if (mouseX > i) {\nbrightness[j] = mouseY;\n}", "if (mouseX > i) {\nbrightness[j] = mouseY;\n}");
 			});
 			
 			test('multi line if else', function(){
+			  expect(1);
 				parse_ok("if (mouseX > i) {\nbrightness[j] = mouseY;\n}\nelse{}", "if (mouseX > i) {\nbrightness[j] = mouseY;\n}\nelse{}");
 			})
 			
 			test('if else', function(){
+			  expect(1);
 				parse_ok("if (true) fill(0); else fill(20);", "if (true) fill(0); else fill(20);")
 			});
 			
 			module('Other');
 			test('comments', function(){
+			  expect(1);
 				parse_ok("// this is a processing comment", "// this is a processing comment");
 			});
 		}
