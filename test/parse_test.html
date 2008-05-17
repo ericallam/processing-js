@@ -56,12 +56,19 @@ $(document).ready(function(){
 		    parse_ok("var theta = 0.0;", "float theta = 0.0f;");
 		  });
 		  
+		  test('#color', function(){
+		    expect(1);
+		    parse_ok("color(153,153,153)", "#999999");
+		  })
+		  
 			module("Vars");
 			test('variable declaration', function(){
-			  expect(3);
+			  expect(5);
 				parse_ok("var fontA = loadFont(\"Arial\")", "PFont fontA = loadFont(\"Arial\")");
 				parse_ok("var yvalues;", "float[] yvalues;");
 				parse_ok("var x, y;", "float x, y;");
+				parse_ok("var hello = 5", "static int hello = 5")
+				parse_ok("var hello;", "static {int hello;}")
 			});
 			
 			test('arrays', function(){
@@ -80,6 +87,17 @@ $(document).ready(function(){
 			test('function_declarations', function(){
 			  expect(1);
 				parse_ok("Processing.setup = function setup() {}", "void setup() {}")
+			});
+			
+			test('length()', function(){
+			  expect(3);
+			  parse_ok(".length", ".length()");
+			  parse_ok("'12345'.length", "'12345'.length()");
+			  parse_ok("'1'.charCodeAt(0).length", "'1'.length()");
+			})
+			
+			test('super()', function(){
+			  parse_ok("superMethod()", "super()")
 			});
 			
 			module("Classes and Objects");
@@ -102,6 +120,16 @@ $(document).ready(function(){
 			  expect(1);
 				parse_ok("function Egg() {with(this){\n  addMethod(this, 'wobble', function() {}); \n}}", "class Egg { void wobble() {} }")
 			});
+			
+			// Still working on this test case.  multilines are rather hard to test with an equality
+			// TODO: figure out a better way to do this.
+			test('Full class', function(){
+			  expect(1);
+			  var processingClass = "class Egg {float x, y;float tilt;Egg(int xpos) {x = xpos;}}";
+
+        var expectedClass = "function Egg() {with(this) {this.x = null;this.y = null;this.tilt = null;if (arguments.length == 1) {var xpos = arguments[0];x = xpos;}}}}";
+        parse_ok(expectedClass, processingClass);
+			})
 			
 			module("Control Structures");
 			test('for_loops', function(){
@@ -129,6 +157,17 @@ $(document).ready(function(){
 			  expect(1);
 				parse_ok("// this is a processing comment", "// this is a processing comment");
 			});
+			
+			test('casting', function(){
+			  expect(2);
+			  parse_ok("0| someVar;", "(int) someVar;")
+			  parse_ok("someVar;", "(float)someVar;")
+			});
+			
+			test('% spaces', function(){
+			  expect(1);
+			  parse_ok("1 % 2", "1%2");
+			})
 		}
 	}(jQuery);
 
