@@ -3,56 +3,10 @@
   <head>
     <title>Processing.parse</title>
     <link rel="Stylesheet" media="screen" href="testsuite.css"/>
-		<link rel="stylesheet" href="../examples/style.css"/></head>
+		<link type="text/css" rel="stylesheet" href="syntax/css/SyntaxHighlighter.css"></link>
     <script src="jquery.js"></script>
     <script src="jqUnit.js"></script>
 	  <script src="../processing.js"></script>
-    <script>				
-			var temp = function($){
-				function parse_ok(expected, processing){
-					parsed = Processing.parse(processing);
-					if(expected == parsed){
-						jqUnit.ok(true);
-					}else{
-						console.log(processing + " expected to parse to: \n" + expected + " \nbut actually parsed as: \n" + parsed);
-						jqUnit.ok(false);
-					}
-					// jqUnit.ok(expected == Processing.parse(processing));
-				}
-				with (jqUnit) {
-
-					module('Simple');
-					test('function calls', function(){					
-						parse_ok("size(200, 200);", "size(200, 200);");
-						parse_ok("background(102);", "background(102);");
-						parse_ok("textFont(fontA, 32);", "textFont(fontA, 32);")
-					});
-					
-					test('variable declaration', function(){
-						parse_ok("var fontA = loadFont(\"Arial\")", "PFont fontA = loadFont(\"Arial\")");
-						parse_ok("var yvalues;", "float[] yvalues;");
-						parse_ok("var theta = 0.0;", "float theta = 0.0f;")
-					});
-					
-					test('arrays', function(){
-						parse_ok("var amplitude = new ArrayList(maxwaves);", "float[] amplitude = new float[maxwaves];")
-					});
-					
-					test('function_declarations', function(){
-						parse_ok("Processing.setup = function setup() {}", "void setup() {}")
-					});
-					
-					test('class_declaration', function(){
-						parse_ok("class EggRing {}", "class EggRing {}");
-					});
-					
-					test('instance method', function(){
-						parse_ok("function Egg() {with(this){\n  addMethod(this, 'wobble', function() {}); \n}}", "class Egg { void wobble() {} }")
-					});
-				}
-			}(jQuery);
-		
- 		</script>
   </head>
   <body id="body">
     <h1 id="header">Processing.parse</h1>
@@ -60,11 +14,109 @@
     <h2 id="banner"></h2>
 		
     <h2 id="userAgent"></h2>
-		<pre id="output"></pre>
   	<div id="main">
-
+			<ol id="parsingtests">
+				
+			</ol>
 	  </div>
 	  <ol id="tests">
 	  </ol>
 </body>
+<script language="javascript" src="syntax/shCore.js"></script>
+<script language="javascript" src="syntax/shBrushJscript.js"></script>
+<script language="javascript">
+$(document).ready(function(){
+	dp.SyntaxHighlighter.HighlightAll('code');
+});
+</script>
+
+<script>				
+	var temp = function($){
+		
+		function successful_output(expected, processing){
+			$('#parsingtests').prepend("<li><pre name='code' class='js'>" + processing + "</pre><pre name='code' class='js'>" + expected + "</pre></li>");
+		}
+		
+		function failure_ouput(expected, actual, processing){
+			
+		}
+		
+		function parse_ok(expected, processing){
+			parsed = Processing.parse(processing);
+			if(expected == parsed){
+				jqUnit.ok(true);
+				successful_output(expected, processing);
+			}else{
+				// console.log(expected.length);
+				// console.log(parsed.length);
+				console.log(processing + "\n\nexpected to parse to:\n\n" + expected + " \n\nbut actually parsed as:\n\n" + parsed);
+				jqUnit.ok(false);
+			}
+		}
+		with (jqUnit) {
+			module("Vars");
+			test('variable declaration', function(){
+				parse_ok("var fontA = loadFont(\"Arial\")", "PFont fontA = loadFont(\"Arial\")");
+				parse_ok("var yvalues;", "float[] yvalues;");
+				parse_ok("var theta = 0.0;", "float theta = 0.0f;");
+				parse_ok("var x, y;", "float x, y;");
+			});
+			
+			test('arrays', function(){
+				parse_ok("var amplitude = new ArrayList(maxwaves);", "float[] amplitude = new float[maxwaves];")
+			});
+			
+			module("Functions");
+			test('function calls', function(){					
+				parse_ok("size(200, 200);", "size(200, 200);");
+				parse_ok("background(102);", "background(102);");
+				parse_ok("textFont(fontA, 32);", "textFont(fontA, 32);")
+			});
+			
+			test('function_declarations', function(){
+				parse_ok("Processing.setup = function setup() {}", "void setup() {}")
+			});
+			
+			module("Classes and Objects");
+			test('class_declaration', function(){
+				parse_ok("class EggRing {}", "class EggRing {}");
+			});
+			
+			test('constructors', function(){
+				parse_ok("function Egg() {with(this){\n  if ( arguments.length == 0 ) {\n} \n}}", "class Egg { Egg() {} }");
+			});
+			
+			test('constructor arguments', function(){
+				parse_ok("function Egg() {with(this){\n  if ( arguments.length == 1 ) {\n    var s = arguments[0];\n} \n}}", "class Egg { Egg(int s) {} }")
+			});
+			
+			test('instance method', function(){
+				parse_ok("function Egg() {with(this){\n  addMethod(this, 'wobble', function() {}); \n}}", "class Egg { void wobble() {} }")
+			});
+			
+			module("Control Structures");
+			test('for_loops', function(){
+				parse_ok("for (var j = 0; j < maxwaves; j++) {}", "for (int j = 0; j < maxwaves; j++) {}");
+			});
+			
+			test('multi line if', function(){
+				parse_ok("if (mouseX > i) {\nbrightness[j] = mouseY;\n}", "if (mouseX > i) {\nbrightness[j] = mouseY;\n}");
+			});
+			
+			test('multi line if else', function(){
+				parse_ok("if (mouseX > i) {\nbrightness[j] = mouseY;\n}\nelse{}", "if (mouseX > i) {\nbrightness[j] = mouseY;\n}\nelse{}");
+			})
+			
+			test('if else', function(){
+				parse_ok("if (true) fill(0); else fill(20);", "if (true) fill(0); else fill(20);")
+			});
+			
+			module('Other');
+			test('comments', function(){
+				parse_ok("// this is a processing comment", "// this is a processing comment");
+			});
+		}
+	}(jQuery);
+
+</script>
 </html>
