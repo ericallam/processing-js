@@ -9,52 +9,45 @@
 	  <script src="../processing.js"></script>
     <script>				
 			var temp = function($){
+				function parse_ok(expected, processing){
+					parsed = Processing.parse(processing);
+					if(expected == parsed){
+						jqUnit.ok(true);
+					}else{
+						console.log(processing + " expected to parse to: \n" + expected + " \nbut actually parsed as: \n" + parsed);
+						jqUnit.ok(false);
+					}
+					// jqUnit.ok(expected == Processing.parse(processing));
+				}
 				with (jqUnit) {
 
 					module('Simple');
-					test('Words', function(){					
-
-// ===================
-// = Processing code =
-// ===================
-						var processing = ""+<r><![CDATA[
-size(200, 200);
-background(102);
-
-// Load the font. Fonts are located within the 
-// main Processing directory/folder and they
-// must be placed within the data directory
-// of your sketch for them to load
-PFont fontA = loadFont("Arial");
-
-// Set the font and its size (in units of pixels)
-textFont(fontA, 32);
-
-int x = 30;
-
-// Use fill() to change the value or color of the text
-fill(0);
-text("ichi", x, 60);
-fill(51);
-text("ni", x, 95);
-fill(204);
-text("san", x, 130);
-fill(255);
-text("shi", x, 165);
-						  ]]></r>;
-// ===============================
-// = Expected output (truncated) =
-// ===============================
-						var expected_output = 'size(200,200);background(102);varfontA=loadFont("Arial");textFont(fontA,32);varx=30;fill(0);text("ichi",x,60);fill(51);text("ni",x,95);fill(204);text("san",x,130);fill(255);text("shi",x,165);';
-						
-						// Parse the processing code and strip the whitespace
-						actual_output = Processing.parse(processing).replace(/\s/g, "");
-
-						ok(expected_output == actual_output);
-						
-						document.getElementById('output').innerHTML = actual_output;
-						
-						
+					test('function calls', function(){					
+						parse_ok("size(200, 200);", "size(200, 200);");
+						parse_ok("background(102);", "background(102);");
+						parse_ok("textFont(fontA, 32);", "textFont(fontA, 32);")
+					});
+					
+					test('variable declaration', function(){
+						parse_ok("var fontA = loadFont(\"Arial\")", "PFont fontA = loadFont(\"Arial\")");
+						parse_ok("var yvalues;", "float[] yvalues;");
+						parse_ok("var theta = 0.0;", "float theta = 0.0f;")
+					});
+					
+					test('arrays', function(){
+						parse_ok("var amplitude = new ArrayList(maxwaves);", "float[] amplitude = new float[maxwaves];")
+					});
+					
+					test('function_declarations', function(){
+						parse_ok("Processing.setup = function setup() {}", "void setup() {}")
+					});
+					
+					test('class_declaration', function(){
+						parse_ok("class EggRing {}", "class EggRing {}");
+					});
+					
+					test('instance method', function(){
+						parse_ok("function Egg() {with(this){\n  addMethod(this, 'wobble', function() {}); \n}}", "class Egg { void wobble() {} }")
 					});
 				}
 			}(jQuery);
