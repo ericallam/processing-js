@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Processing.parse</title>
+    <link rel="Stylesheet" media="screen" href="testsuite.css"/>
+		<link rel="stylesheet" href="../examples/style.css"/></head>
+    <script src="jquery.js"></script>
+    <script src="jqUnit.js"></script>
+	  <script src="../processing.js"></script>
+    <script>				
+			var temp = function($){
+				with (jqUnit) {
+
+					module('Simple');
+					test('Words', function(){					
+
+// ===================
+// = Processing code =
+// ===================
+						var processing = ""+<r><![CDATA[
+size(200, 200);
+background(102);
+
+// Load the font. Fonts are located within the 
+// main Processing directory/folder and they
+// must be placed within the data directory
+// of your sketch for them to load
+PFont fontA = loadFont("Arial");
+
+// Set the font and its size (in units of pixels)
+textFont(fontA, 32);
+
+int x = 30;
+
+// Use fill() to change the value or color of the text
+fill(0);
+text("ichi", x, 60);
+fill(51);
+text("ni", x, 95);
+fill(204);
+text("san", x, 130);
+fill(255);
+text("shi", x, 165);
+						  ]]></r>;
+// ===============================
+// = Expected output (truncated) =
+// ===============================
+						var expected_output = 'size(200,200);background(102);varfontA=loadFont("Arial");textFont(fontA,32);varx=30;fill(0);text("ichi",x,60);fill(51);text("ni",x,95);fill(204);text("san",x,130);fill(255);text("shi",x,165);';
+						
+						// Parse the processing code and strip the whitespace
+						actual_output = Processing.parse(processing).replace(/\s/g, "");
+
+						ok(expected_output == actual_output);
+						
+						document.getElementById('output').innerHTML = actual_output;
+						
+						
+					});
+				}
+			}(jQuery);
+		
+ 		</script>
+  </head>
+  <body id="body">
+    <h1 id="header">Processing.parse</h1>
+		
+    <h2 id="banner"></h2>
+		
+    <h2 id="userAgent"></h2>
+		<pre id="output"></pre>
+  	<div id="main">
+
+	  </div>
+	  <ol id="tests">
+	  </ol>
+</body>
+</html>
